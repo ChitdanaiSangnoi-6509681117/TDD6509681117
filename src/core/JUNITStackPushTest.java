@@ -6,7 +6,6 @@ public class JUNITStackPushTest extends TestCase {
 	public void testPush() {
         Stack stack = new Stack();
         
-        
         assertTrue(stack.push(1));  
         assertEquals(1, stack.getSize());
         assertEquals(1, stack.top());

@@ -11,38 +11,44 @@ public class Stack implements IStack {
 		this.top = null;
 		size = 0;
 		stack = new ArrayList<>();
-		topPos = 0;
+		topPos = -1;
+		maxSize = 10;
 	}
 	
 	@Override
 	public boolean push(Object elm){
 		if(isFull()) {
+			System.out.println("Full");
 			return false;
 		}
-		if(isEmpty()||elm.getClass().equals(top.getClass())) {
+		else if (isEmpty()) {
 			stack.add(elm);
-			top = elm;
-			size++;
 			topPos++;
+			size++;
 			return true;
 		}
+		else if (!isEmpty() && (elm.getClass() == stack.get(topPos).getClass())) {
+			stack.add(elm);
+			topPos++;
+			size++;
+			return true;
+		}
+		
 		return false;
 	}
 	
 	@Override
 	public Object pop() {
 		if(!isEmpty()) {
-			Object tmp = top;
-	        top = (topPos > 0) ? stack.get(topPos - 1) : null;
-	        stack.remove(topPos - 1);
-	        size--;
-	        topPos = (topPos > 0) ? topPos - 1 : 0;
-	        return tmp;
+			Object topTmp = stack.get(topPos);
+			size--;
+			topPos--;
+			return topTmp;
 		}
 		else {
 			System.out.println("ERROR: Nothing to pop, empty stack.");
+			return null;
 		}
-		return 0;
 	}
 
 	@Override
@@ -54,7 +60,7 @@ public class Stack implements IStack {
 	@Override
 	public Object top() {
 		// TODO Auto-generated method stub
-		return top;
+		return topPos < 0 ? null : stack.get(topPos);
 	}
 
 	@Override
